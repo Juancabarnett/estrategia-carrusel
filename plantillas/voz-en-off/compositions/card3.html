@@ -1,0 +1,97 @@
+<template>
+  <style>
+    @font-face { font-family: 'DNEmoji'; src: url('assets/fonts/emoji.ttf'); }
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; }
+    #wrap { position: absolute; left: 150px; top: 560px; width: 780px; transform-origin: 50% 0%; }
+    #shadow { position: absolute; left: -60px; right: -60px; top: -20px; height: 200px; border-radius: 120px; }
+    .card { position: relative; padding: 34px 38px; border-radius: 38px; }
+    .card.dark { background: #15121D; border: 1.5px solid rgba(196,166,255,0.2); color: #FFFFFF; }
+    .card.lite { background: #FFFFFF; border: 1.5px solid rgba(124,58,237,0.16); color: #16121F; }
+    #shadow.dark { background: radial-gradient(closest-side, rgba(124,58,237,0.42), rgba(124,58,237,0)); }
+    #shadow.lite { background: radial-gradient(closest-side, rgba(60,20,120,0.22), rgba(60,20,120,0)); }
+    .tag { display: inline-block; font-weight: 800; font-size: 20px; letter-spacing: 0.09em; padding: 9px 18px; border-radius: 999px; }
+    .dark .tag { color: #C4A6FF; background: rgba(124,58,237,0.22); }
+    .lite .tag { color: #6D28D9; background: rgba(124,58,237,0.10); }
+    .emo { font-family: 'DNEmoji'; }
+    .row { display: flex; align-items: center; justify-content: space-between; height: 74px; padding: 0 22px; margin-top: 10px; border-radius: 20px; }
+    .dark .row { background: rgba(255,255,255,0.055); }
+    .lite .row { background: #F5F2FA; }
+    .row .l { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 30px; }
+    .row .l .emo { font-size: 34px; }
+    .row .r { font-weight: 700; font-size: 26px; }
+    .row.hi { background: linear-gradient(90deg, rgba(94,11,139,0.6), rgba(124,58,237,0.5)); border: 1.5px solid rgba(196,166,255,0.5); }
+    .no { color: #FF6B81; }
+    .ok { color: #C4A6FF; }
+    .lite .ok { color: #6D28D9; }
+</style>
+  <div id="root" data-composition-id="card3" data-width="1080" data-height="1920">
+    <div id="wrap" data-layout-allow-overflow>
+      <div id="shadow" class="dark"></div>
+      <div id="card" class="card dark">
+        <div class="tag" id="tg3">DOS MODALIDADES</div>
+        <div id="b1" style="margin-top:18px;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;"><div style="font-weight:800;font-size:34px;"><span class="emo">🧪</span> Piloto</div><div id="n1" style="font-weight:900;font-size:42px;">S/ 0</div></div>
+          <div style="position:relative;height:18px;margin-top:12px;border-radius:999px;background:rgba(255,255,255,0.09);overflow:hidden;"><div id="f1" style="position:absolute;left:0;top:0;bottom:0;width:63.6%;border-radius:999px;background:#9B6BE8;transform-origin:0 50%;"></div></div>
+          <div id="d1" style="margin-top:8px;font-weight:500;font-size:25px;color:#A9A3B8;">Para tu planta piloto · hasta 24 meses</div>
+        </div>
+        <div id="b2" style="margin-top:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;"><div style="font-weight:800;font-size:34px;"><span class="emo">🏭</span> Industrial</div><div id="n2" style="font-weight:900;font-size:42px;">S/ 0</div></div>
+          <div style="position:relative;height:18px;margin-top:12px;border-radius:999px;background:rgba(255,255,255,0.09);overflow:hidden;"><div id="f2" style="position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:999px;background:linear-gradient(90deg,#5E0B8B,#7C3AED,#C4A6FF);box-shadow:0 0 24px rgba(196,166,255,0.6);transform-origin:0 50%;"></div></div>
+          <div id="d2" style="margin-top:8px;font-weight:500;font-size:25px;color:#A9A3B8;">Para producción real · hasta 30 meses</div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="row" id="q1"><div class="l"><span class="emo">💰</span>Recibe el dinero</div><div class="r ok" id="q1s">Tu empresa</div></div>
+          <div class="row" id="q2"><div class="l"><span class="emo">🤝</span>Requisito</div><div class="r ok" id="q2s">Empresa aliada</div></div>
+          <div class="row hi" id="q3"><div class="l"><span class="emo">📅</span>Cierre</div><div class="r" id="q3s" style="color:#FFFFFF;">15 ene 2027 · 1 p. m.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const card = document.getElementById("card");
+    const wrap = document.getElementById("wrap");
+    const shadow = document.getElementById("shadow");
+    const H = card.offsetHeight;
+    function bottomOf(sel) {
+      const e = document.querySelector(sel); let y = 0, n = e;
+      while (n && n !== card) { y += n.offsetTop; n = n.offsetParent; }
+      return Math.min(H, y + e.offsetHeight + 36);
+    }
+    function state(sel, s) {
+      const b = bottomOf(sel);
+      return { clip: "inset(0px 0px " + (H - b) + "px 0px round 38px)", y: 975 - 560 - s * b / 2, b: b };
+    }
+    function reveal(sel, t, s, d) {
+      const st = state(sel, s);
+      tl.to(card, { clipPath: st.clip, duration: d || 0.45, ease: "power3.out" }, t);
+      tl.to(wrap, { y: st.y, scale: s, duration: d || 0.45, ease: "power3.out" }, t);
+      tl.to(shadow, { height: st.b + 80, duration: d || 0.45, ease: "power3.out" }, t);
+    }
+
+    const s0 = state("#tg3", 1.1);tl.set(card, { clipPath: s0.clip }, 0); tl.set(shadow, { height: s0.b + 80 }, 0);tl.fromTo(wrap, { y: s0.y + 140, scale: 1.1 * 0.55, opacity: 0, rotation: 4 }, { y: s0.y, scale: 1.1, opacity: 1, rotation: 0, duration: 0.55, ease: "back.out(1.5)" }, 0);
+tl.set(["#b1","#b2","#q1","#q2","#q3"],{opacity:0},0);
+reveal("#b1", 1.08, 1.06, 0.45);
+tl.fromTo("#b1",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},1.12);
+tl.fromTo("#f1",{scaleX:0},{scaleX:1,duration:0.7,ease:"power2.out"},1.44);
+(function(){const o={v:0};const el=document.querySelector("#n1");tl.fromTo(o,{v:0},{v:700000,duration:0.7,ease:"power2.out",onUpdate:()=>{el.textContent="S/ "+(Math.round(o.v/1000)*1000).toLocaleString("en-US").replace(/,/g," ");}},1.44);})();
+reveal("#b2", 3.88, 1.0, 0.45);
+tl.fromTo("#b2",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},3.92);
+tl.fromTo("#f2",{scaleX:0},{scaleX:1,duration:0.8,ease:"power2.out"},4.32);
+(function(){const o={v:0};const el=document.querySelector("#n2");tl.fromTo(o,{v:0},{v:1100000,duration:0.8,ease:"power2.out",onUpdate:()=>{el.textContent="S/ "+(Math.round(o.v/1000)*1000).toLocaleString("en-US").replace(/,/g," ");}},4.32);})();
+tl.fromTo("#n2",{scale:1},{scale:1.14,duration:0.14,yoyo:true,repeat:1,transformOrigin:"100% 60%"},5.12);
+reveal("#q1", 7.00, 1.0, 0.45);
+tl.fromTo("#q1",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},7.04);
+tl.fromTo("#q1s",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},8.08);
+reveal("#q2", 8.68, 1.0, 0.45);
+tl.fromTo("#q2",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},8.72);
+tl.fromTo("#q2s",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},9.68);
+reveal("#q3", 12.12, 1.0, 0.45);
+tl.fromTo("#q3",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},12.16);
+tl.fromTo("#q3s",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},12.80);
+tl.fromTo("#q3",{boxShadow:"0 0 0px rgba(124,58,237,0)"},{boxShadow:"0 0 48px rgba(124,58,237,0.8)",duration:0.32,yoyo:true,repeat:3,ease:"sine.inOut"},12.82);
+    tl.to(wrap, { x: -1250, rotation: -9, duration: 0.32, ease: "power3.in" }, 15.20);
+    window.__timelines["card3"] = tl;
+  </script>
+</template>

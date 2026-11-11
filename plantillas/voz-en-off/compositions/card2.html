@@ -1,0 +1,85 @@
+<template>
+  <style>
+    @font-face { font-family: 'DNEmoji'; src: url('assets/fonts/emoji.ttf'); }
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; }
+    #wrap { position: absolute; left: 150px; top: 560px; width: 780px; transform-origin: 50% 0%; }
+    #shadow { position: absolute; left: -60px; right: -60px; top: -20px; height: 200px; border-radius: 120px; }
+    .card { position: relative; padding: 34px 38px; border-radius: 38px; }
+    .card.dark { background: #15121D; border: 1.5px solid rgba(196,166,255,0.2); color: #FFFFFF; }
+    .card.lite { background: #FFFFFF; border: 1.5px solid rgba(124,58,237,0.16); color: #16121F; }
+    #shadow.dark { background: radial-gradient(closest-side, rgba(124,58,237,0.42), rgba(124,58,237,0)); }
+    #shadow.lite { background: radial-gradient(closest-side, rgba(60,20,120,0.22), rgba(60,20,120,0)); }
+    .tag { display: inline-block; font-weight: 800; font-size: 20px; letter-spacing: 0.09em; padding: 9px 18px; border-radius: 999px; }
+    .dark .tag { color: #C4A6FF; background: rgba(124,58,237,0.22); }
+    .lite .tag { color: #6D28D9; background: rgba(124,58,237,0.10); }
+    .emo { font-family: 'DNEmoji'; }
+    .row { display: flex; align-items: center; justify-content: space-between; height: 74px; padding: 0 22px; margin-top: 10px; border-radius: 20px; }
+    .dark .row { background: rgba(255,255,255,0.055); }
+    .lite .row { background: #F5F2FA; }
+    .row .l { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 30px; }
+    .row .l .emo { font-size: 34px; }
+    .row .r { font-weight: 700; font-size: 26px; }
+    .row.hi { background: linear-gradient(90deg, rgba(94,11,139,0.6), rgba(124,58,237,0.5)); border: 1.5px solid rgba(196,166,255,0.5); }
+    .no { color: #FF6B81; }
+    .ok { color: #C4A6FF; }
+    .lite .ok { color: #6D28D9; }
+</style>
+  <div id="root" data-composition-id="card2" data-width="1080" data-height="1920">
+    <div id="wrap" data-layout-allow-overflow>
+      <div id="shadow" class="lite"></div>
+      <div id="card" class="card lite">
+        <div class="tag">PROCIENCIA · CONCYTEC</div>
+        <div id="ttl" style="margin-top:16px;font-weight:900;font-size:58px;letter-spacing:-0.03em;line-height:1.06;">Escalamiento<br/>Tecnológico</div>
+        <div id="sub" style="margin-top:10px;font-weight:500;font-size:26px;color:#6B6478;">Concurso 2027-01 · no reembolsable</div>
+        <div id="flow" style="position:relative;margin-top:18px;">
+          <div id="line" style="position:absolute;left:34px;top:42px;width:4px;height:196px;background:linear-gradient(#C4A6FF,#7C3AED);transform-origin:50% 0;"></div>
+          <div id="s1" style="display:flex;align-items:center;gap:20px;height:84px;position:relative;"><div class="emo" style="display:flex;align-items:center;justify-content:center;width:70px;height:70px;border-radius:22px;font-size:36px;background:#F1EAFE;">💡</div><div style="font-weight:800;font-size:33px;">Producto o proceso nuevo</div></div>
+          <div id="s2" style="display:flex;align-items:center;gap:20px;height:84px;position:relative;margin-top:12px;"><div class="emo" style="display:flex;align-items:center;justify-content:center;width:70px;height:70px;border-radius:22px;font-size:36px;background:#F1EAFE;">✅</div><div style="font-weight:800;font-size:33px;">Ya lo probaste</div></div>
+          <div id="s3" style="display:flex;align-items:center;gap:20px;height:84px;position:relative;margin-top:12px;"><div class="emo" style="display:flex;align-items:center;justify-content:center;width:70px;height:70px;border-radius:22px;font-size:36px;background:linear-gradient(135deg,#5E0B8B,#7C3AED);">🏭</div><div style="font-weight:900;font-size:33px;color:#6D28D9;">Producción a gran escala</div></div>
+        </div>
+        <div id="money" style="display:flex;align-items:center;gap:14px;margin-top:20px;padding:20px 24px;border-radius:22px;background:linear-gradient(90deg,#5E0B8B,#7C3AED);color:#FFFFFF;font-weight:800;font-size:30px;"><span class="emo">💸</span>El Estado pone la plata</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const card = document.getElementById("card");
+    const wrap = document.getElementById("wrap");
+    const shadow = document.getElementById("shadow");
+    const H = card.offsetHeight;
+    function bottomOf(sel) {
+      const e = document.querySelector(sel); let y = 0, n = e;
+      while (n && n !== card) { y += n.offsetTop; n = n.offsetParent; }
+      return Math.min(H, y + e.offsetHeight + 36);
+    }
+    function state(sel, s) {
+      const b = bottomOf(sel);
+      return { clip: "inset(0px 0px " + (H - b) + "px 0px round 38px)", y: 975 - 560 - s * b / 2, b: b };
+    }
+    function reveal(sel, t, s, d) {
+      const st = state(sel, s);
+      tl.to(card, { clipPath: st.clip, duration: d || 0.45, ease: "power3.out" }, t);
+      tl.to(wrap, { y: st.y, scale: s, duration: d || 0.45, ease: "power3.out" }, t);
+      tl.to(shadow, { height: st.b + 80, duration: d || 0.45, ease: "power3.out" }, t);
+    }
+
+    const s0 = state("#sub", 1.08);tl.set(card, { clipPath: s0.clip }, 0); tl.set(shadow, { height: s0.b + 80 }, 0);tl.fromTo(wrap, { y: s0.y + 140, scale: 1.08 * 0.55, opacity: 0, rotation: 4 }, { y: s0.y, scale: 1.08, opacity: 1, rotation: 0, duration: 0.55, ease: "back.out(1.5)" }, 0);
+tl.fromTo("#ttl",{opacity:0,y:30},{opacity:1,y:0,duration:0.35,ease:"power3.out"},0.64);
+tl.fromTo("#ttl",{scale:1},{scale:1.05,duration:0.14,yoyo:true,repeat:1,transformOrigin:"0% 50%"},1.36);
+reveal("#sub", 1.86, 1.08, 0.45);
+tl.fromTo("#sub",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},1.92);
+reveal("#s1", 4.08, 1.0, 0.45);
+tl.fromTo("#s1",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},4.08);
+tl.fromTo("#line",{scaleY:0},{scaleY:1,duration:4.0,ease:"none"},4.16);
+reveal("#s2", 5.86, 1.0, 0.45);
+tl.fromTo("#s2",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},5.92);
+reveal("#money", 6.56, 1.0, 0.45);
+tl.fromTo("#money",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},6.64);
+tl.fromTo("#s3",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},8.00);
+tl.fromTo("#s3",{scale:1},{scale:1.06,duration:0.15,yoyo:true,repeat:1,transformOrigin:"0% 50%"},8.64);
+tl.set(["#s1","#s2","#s3","#money","#sub"],{opacity:0},0);
+    tl.to(wrap, { x: -1250, rotation: -9, duration: 0.32, ease: "power3.in" }, 9.12);
+    window.__timelines["card2"] = tl;
+  </script>
+</template>

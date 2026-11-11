@@ -1,0 +1,9 @@
+{
+  "model": "V4_5PLUS",
+  "title": "Reel background - escalamiento millon",
+  "style": "Modern minimal tech explainer bed, clean electronic, soft plucks, light percussion, instrumental",
+  "prompt": "Clean soft plucked synth and light ticking hi-hats open with a curious, confident tech-news feel. Around 6 seconds a steady minimal groove with soft deep bass locks in, leaving the midrange empty for a spoken voice. Around 20 seconds it lifts slightly into a brighter, optimistic feel. Around 34 seconds it resolves into a clean, satisfying ending. Simple repeating loop, sparse melody, no lead instrument in the speech range. 110 BPM. Modern, clean, premium. No vocals, no lyrics.",
+  "instrumental": true,
+  "customMode": true,
+  "negativeTags": "Vocals, Choir, Vocal chops, Heavy Metal, Aggressive, Distorted guitar, Busy lead melody, Saxophone"
+}

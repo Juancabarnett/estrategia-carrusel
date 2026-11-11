@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0C0A12; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      #cam, #punch { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 540px 975px; }
+      #cam { z-index: 2; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="39.6" data-width="1080" data-height="1920">
+      <div id="bg" data-composition-id="bg" data-composition-src="compositions/bg.html" data-start="0.00" data-duration="39.60" data-track-index="0" data-track-kind="graphics" data-width="1080" data-height="1920" style="position:absolute;inset:0;z-index:0;"></div>
+      <div id="cam" data-layout-allow-overflow>
+        <div id="punch" data-layout-allow-overflow>
+                    <div id="card1" data-composition-id="card1" data-composition-src="compositions/card1.html" data-start="0.00" data-duration="9.84" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920" style="position:absolute;inset:0;z-index:2;"></div>
+          <div id="card2" data-composition-id="card2" data-composition-src="compositions/card2.html" data-start="9.84" data-duration="9.44" data-track-index="3" data-track-kind="graphics" data-width="1080" data-height="1920" style="position:absolute;inset:0;z-index:3;"></div>
+          <div id="card3" data-composition-id="card3" data-composition-src="compositions/card3.html" data-start="19.28" data-duration="15.52" data-track-index="4" data-track-kind="graphics" data-width="1080" data-height="1920" style="position:absolute;inset:0;z-index:4;"></div>
+          <div id="card4" data-composition-id="card4" data-composition-src="compositions/card4.html" data-start="34.80" data-duration="3.20" data-track-index="5" data-track-kind="graphics" data-width="1080" data-height="1920" style="position:absolute;inset:0;z-index:5;"></div>
+          <div id="head" data-composition-id="head" data-composition-src="compositions/head.html" data-start="0.00" data-duration="38.00" data-track-index="7" data-track-kind="graphics" data-width="1080" data-height="1920" style="position:absolute;inset:0;z-index:7;"></div>
+        </div>
+      </div>
+      <div id="endcard" data-composition-id="endcard" data-composition-src="compositions/endcard.html" data-start="38.00" data-duration="1.60" data-track-index="6" data-track-kind="graphics" data-width="1080" data-height="1920" style="position:absolute;inset:0;z-index:6;"></div>
+      <audio id="mix" src="assets/mezcla.wav" data-start="0" data-duration="39.6" data-track-index="1" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+            tl.fromTo("#cam",{scale:1.0},{scale:1.045,duration:9.84,ease:"none",immediateRender:false},0.00);
+      tl.fromTo("#cam",{scale:1.0},{scale:1.045,duration:9.44,ease:"none",immediateRender:false},9.84);
+      tl.fromTo("#cam",{scale:1.0},{scale:1.045,duration:15.52,ease:"none",immediateRender:false},19.28);
+      tl.fromTo("#cam",{scale:1.0},{scale:1.045,duration:3.20,ease:"none",immediateRender:false},34.80);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},0.48);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},0.60);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},1.86);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},1.98);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},8.40);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},8.52);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},10.48);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},10.60);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},16.48);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},16.60);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},23.60);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},23.72);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},24.40);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},24.52);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},32.08);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},32.20);
+      tl.to("#punch",{scale:1.065,duration:0.12,ease:"power2.out"},35.60);
+      tl.to("#punch",{scale:1.0,duration:0.5,ease:"power2.inOut"},35.72);
+      tl.to("#punch",{x:-40,rotation:-1.5,duration:0.3,ease:"power2.in"},9.52);
+      tl.to("#punch",{x:0,rotation:0,duration:0.45,ease:"power3.out"},9.84);
+      tl.to("#punch",{x:-40,rotation:-1.5,duration:0.3,ease:"power2.in"},18.96);
+      tl.to("#punch",{x:0,rotation:0,duration:0.45,ease:"power3.out"},19.28);
+      tl.to("#punch",{x:-40,rotation:-1.5,duration:0.3,ease:"power2.in"},34.48);
+      tl.to("#punch",{x:0,rotation:0,duration:0.45,ease:"power3.out"},34.80);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

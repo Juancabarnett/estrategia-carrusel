@@ -1,0 +1,5 @@
+Voz: clon "Juanca de Data Nube" (ElevenLabs eleven_v4), ritmo tomado del reel de referencia de lobby.eu (solo análisis, no se usa su audio).
+Música: generada con Suno a través de Kie.ai (music_v1.mp3).
+Efectos de sonido: Earshot (MIT) y Openverse (CC0: cash-register_1.mp3).
+Logo: Data Nube, archivo entregado por el usuario.
+Datos: Bases modificadas del concurso E067-2027-01 "Escalamiento Tecnológico" (PROCIENCIA), 01/10/2026.

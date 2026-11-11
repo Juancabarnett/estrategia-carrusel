@@ -1,0 +1,416 @@
+[
+ {
+  "start": 0.0,
+  "sound": "earshot_whoosh_tight.wav",
+  "peak_dbfs": -10,
+  "event": "entrada"
+ },
+ {
+  "start": 0.15,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.25,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.35,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.45,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.55,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.65,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.75,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.85,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 0.95,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.05,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.15,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.25,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.35,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.45,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.55,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.65,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -17,
+  "event": "contador"
+ },
+ {
+  "start": 1.86,
+  "sound": "earshot_ding.wav",
+  "peak_dbfs": -8,
+  "event": "contador llega a 1,1 millones"
+ },
+ {
+  "start": 0.48,
+  "sound": "earshot_pop_wide.wav",
+  "peak_dbfs": -13,
+  "event": "caja 1 millón"
+ },
+ {
+  "start": 3.04,
+  "sound": "earshot_pop_wide.wav",
+  "peak_dbfs": -12,
+  "event": "caja devuelve"
+ },
+ {
+  "start": 3.08,
+  "sound": "earshot_check.wav",
+  "peak_dbfs": -11,
+  "event": "píldora no se devuelve"
+ },
+ {
+  "start": 3.84,
+  "sound": "earshot_swish_soft.wav",
+  "peak_dbfs": -13,
+  "event": "fila préstamo"
+ },
+ {
+  "start": 4.24,
+  "sound": "earshot_error.wav",
+  "peak_dbfs": -10,
+  "event": "préstamo ✕"
+ },
+ {
+  "start": 4.88,
+  "sound": "earshot_swish_soft.wav",
+  "peak_dbfs": -14,
+  "event": "fila inversionista"
+ },
+ {
+  "start": 6.32,
+  "sound": "earshot_error.wav",
+  "peak_dbfs": -10,
+  "event": "inversionista ✕"
+ },
+ {
+  "start": 7.2,
+  "sound": "earshot_swish_soft.wav",
+  "peak_dbfs": -14,
+  "event": "fila subvención"
+ },
+ {
+  "start": 8.4,
+  "sound": "earshot_check.wav",
+  "peak_dbfs": -9,
+  "event": "100% tuya ✓"
+ },
+ {
+  "start": 9.5,
+  "sound": "earshot_whoosh_tight.wav",
+  "peak_dbfs": -7,
+  "event": "salida tarjeta 1"
+ },
+ {
+  "start": 10.48,
+  "sound": "earshot_pop_wide.wav",
+  "peak_dbfs": -12,
+  "event": "título escalamiento"
+ },
+ {
+  "start": 11.92,
+  "sound": "earshot_pop_soft.wav",
+  "peak_dbfs": -14,
+  "event": "Concytec"
+ },
+ {
+  "start": 13.92,
+  "sound": "earshot_swipe_glide.wav",
+  "peak_dbfs": -13,
+  "event": "paso 1"
+ },
+ {
+  "start": 15.76,
+  "sound": "earshot_check.wav",
+  "peak_dbfs": -10,
+  "event": "paso 2 probado"
+ },
+ {
+  "start": 16.48,
+  "sound": "cash-register_1.mp3",
+  "peak_dbfs": -10,
+  "event": "el Estado pone la plata"
+ },
+ {
+  "start": 17.84,
+  "sound": "earshot_swish_soft.wav",
+  "peak_dbfs": -13,
+  "event": "paso 3"
+ },
+ {
+  "start": 18.48,
+  "sound": "earshot_pop_wide.wav",
+  "peak_dbfs": -12,
+  "event": "gran escala"
+ },
+ {
+  "start": 18.94,
+  "sound": "earshot_whoosh_tight.wav",
+  "peak_dbfs": -7,
+  "event": "salida tarjeta 2"
+ },
+ {
+  "start": 20.72,
+  "sound": "earshot_swipe_glide.wav",
+  "peak_dbfs": -12,
+  "event": "barra piloto"
+ },
+ {
+  "start": 20.72,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador piloto"
+ },
+ {
+  "start": 20.82,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador piloto"
+ },
+ {
+  "start": 20.92,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador piloto"
+ },
+ {
+  "start": 21.02,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador piloto"
+ },
+ {
+  "start": 21.12,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador piloto"
+ },
+ {
+  "start": 21.22,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador piloto"
+ },
+ {
+  "start": 21.32,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador piloto"
+ },
+ {
+  "start": 21.45,
+  "sound": "earshot_ding.wav",
+  "peak_dbfs": -11,
+  "event": "700 mil"
+ },
+ {
+  "start": 23.6,
+  "sound": "earshot_swipe_glide.wav",
+  "peak_dbfs": -11,
+  "event": "barra industrial"
+ },
+ {
+  "start": 23.6,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 23.7,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 23.8,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 23.9,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 24.0,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 24.1,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 24.2,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 24.3,
+  "sound": "earshot_tick.wav",
+  "peak_dbfs": -18,
+  "event": "contador industrial"
+ },
+ {
+  "start": 24.42,
+  "sound": "cash-register_1.mp3",
+  "peak_dbfs": -9,
+  "event": "1,1 millones"
+ },
+ {
+  "start": 26.32,
+  "sound": "earshot_swish_soft.wav",
+  "peak_dbfs": -14,
+  "event": "fila recibe"
+ },
+ {
+  "start": 27.36,
+  "sound": "earshot_pop_soft.wav",
+  "peak_dbfs": -13,
+  "event": "tu empresa"
+ },
+ {
+  "start": 28.0,
+  "sound": "earshot_swish_soft.wav",
+  "peak_dbfs": -14,
+  "event": "fila requisito"
+ },
+ {
+  "start": 28.96,
+  "sound": "earshot_pop_soft.wav",
+  "peak_dbfs": -13,
+  "event": "empresa aliada"
+ },
+ {
+  "start": 31.44,
+  "sound": "earshot_swish_soft.wav",
+  "peak_dbfs": -14,
+  "event": "fila cierre"
+ },
+ {
+  "start": 32.1,
+  "sound": "earshot_clock.wav",
+  "peak_dbfs": -12,
+  "event": "tic-tac fecha"
+ },
+ {
+  "start": 32.6,
+  "sound": "earshot_clock.wav",
+  "peak_dbfs": -12,
+  "event": "tic-tac fecha"
+ },
+ {
+  "start": 33.1,
+  "sound": "earshot_clock.wav",
+  "peak_dbfs": -12,
+  "event": "tic-tac fecha"
+ },
+ {
+  "start": 33.6,
+  "sound": "earshot_clock.wav",
+  "peak_dbfs": -12,
+  "event": "tic-tac fecha"
+ },
+ {
+  "start": 34.46,
+  "sound": "earshot_whoosh_tight.wav",
+  "peak_dbfs": -7,
+  "event": "salida tarjeta 3"
+ },
+ {
+  "start": 35.6,
+  "sound": "earshot_pop_wide.wav",
+  "peak_dbfs": -9,
+  "event": "MILLÓN"
+ },
+ {
+  "start": 37.28,
+  "sound": "earshot_check.wav",
+  "peak_dbfs": -11,
+  "event": "califica"
+ },
+ {
+  "start": 37.72,
+  "sound": "earshot_whoosh_tight.wav",
+  "peak_dbfs": -9,
+  "event": "logo"
+ },
+ {
+  "start": 38.1,
+  "sound": "earshot_ding.wav",
+  "peak_dbfs": -9,
+  "event": "logo"
+ }
+]

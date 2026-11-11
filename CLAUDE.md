@@ -19,13 +19,14 @@ Estas reglas vienen de las decisiones del usuario hasta el 10 de noviembre de 20
 - Identidad (avatar, voz, ajustes): `.claude/skills/avatar-reel/identity.json`.
 - Keys: en local, `.env` (nunca se sube a git). En la nube, network secrets del entorno: ver `NUBE.md`.
 
-## Avatar y voz
+## Formato, voz y avatar
 
-- **Avatar:** siempre el look 2 de HeyGen (`da8e547d52d6412eabd2589473c49ff6`), con Avatar V (`engine.type: avatar_v`), 16:9 y 720p. Mantener el fondo natural de la habitación: no enviar `background` ni `remove_background`.
+- **Formato por defecto: voz en off, sin avatar.** Desde el 11 de noviembre de 2026 vale para todos los videos. Parte de `plantillas/voz-en-off/` (abajo se describe). No uses HeyGen salvo que el usuario pida el avatar para un video concreto.
+- **Si piden avatar:** el look 2 de HeyGen (`da8e547d52d6412eabd2589473c49ff6`), con Avatar V (`engine.type: avatar_v`), 16:9 y 720p. Mantener el fondo natural de la habitación: no enviar `background` ni `remove_background`.
 - **Encuadre del look 2:** es horizontal y en vertical se ve suave. Para la franja de abajo, escalar a 1365x768 y recortar 1080x768 desde x=255 (o 1422x800 desde x=-285 para 1080x800).
 - **Costo:** HeyGen cobra de una billetera en dólares sin recarga automática, unos 0.12 USD por segundo (34 s = 3.96, 41 s = 4.94, 47 s = 5.65). Pide confirmación antes de cada render. Si el usuario da un tope, ajusta el guion para cumplirlo.
 - **Voz:** ElevenLabs `eleven_v4`, texto a voz directo con la voz clonada "Juanca de Data Nube" (`4URstKpRRZV6Dkdk2zMj`). No usar Gemini ni speech-to-speech. Ajustes aprobados: estabilidad 0.2, similitud 0.75. Tono de noticia: hook con `[surprised]` o `[excited]`, exclamaciones y énfasis. El CTA se escribe "¡Comenta: FONDO!" (con "Comenta... FONDO" se oía "a fondo").
-- **Flujo:** guion → verificar datos → un solo audio para aprobar → imágenes → render. Entrega un solo audio, no varias opciones, salvo que lo pida.
+- **Flujo:** guion → verificar datos → un solo audio para aprobar → tarjetas e imágenes → edición. Con avatar se agrega el render de HeyGen, que se paga. Entrega un solo audio, no varias opciones, salvo que lo pida.
 - **Hacer cada render una sola vez:** si se corta la sesión, reanudar el `video_id` guardado en `video_create.raw.json`; nunca crear otro.
 
 ## Guiones sobre fondos y premios
@@ -37,7 +38,17 @@ Estas reglas vienen de las decisiones del usuario hasta el 10 de noviembre de 20
 
 ## Edición vertical (1080x1920)
 
-- **Formato que mejor funcionó:** el simple. Avatar abajo, panel plano arriba con una sola idea grande por pantalla y pocas fotos. El reel "Hasta 150 mil soles" tuvo 4,976 vistas y los más cargados 200 a 900. Proponlo como base y prueba variaciones.
+- **Voz en off (formato por defecto):** se basa en la plantilla `plantillas/voz-en-off/`, con el ejemplo del Escalamiento Tecnológico en `ejemplo/`.
+  - **Fondo:** oscuro con una cuadrícula tenue.
+  - **Arriba:** titular grande que aparece palabra por palabra, con las palabras clave en cajas.
+  - **Centro:** una tarjeta compacta que crece con el guion: contador de la cifra, barras, filas de requisitos con íconos y ✕ que se sacuden. Es la misma tarjeta que va creciendo, no imágenes nuevas.
+  - **Final:** CTA "Comenta FONDO" y tarjeta con el logo de Data Nube.
+  - **Hook:** la cifra va grande en el centro.
+  - **Movimiento:** empuje lento de cámara, golpes de zoom en los números y transiciones con rebote.
+  - **Morado:** degradado del logo `#5E0B8B` a `#9B6BE8`.
+  - **Voz:** continua, unas 2.6 palabras por segundo, con una pausa después del hook.
+  - **Render:** no uses `filter: blur()` grande en CSS, porque colgó el render; usa un brillo con `radial-gradient`.
+- **Formato simple con avatar (solo si lo piden):** avatar abajo, panel plano arriba con una sola idea grande por pantalla y pocas fotos. El reel "Hasta 150 mil soles" tuvo 4,976 vistas, frente a 200 a 900 de los más cargados.
 - **Color:** el último aprobado es el morado Data Nube (`#7C3AED`, detalles `#C4A6FF`, texto blanco sobre morado). Antes se usaron amarillo `#FFD60A` y naranja `#EE5A0B`. Confirma la paleta al empezar cada video.
 - **Llenar el cuadro:** nada de barras ni áreas vacías. Fotos de borde a borde; bloques de color en los paneles.
 - **Zonas seguras de TikTok e Instagram:** texto y logos entre y=280 e y=1400, y fuera de los 140 px de la derecha.

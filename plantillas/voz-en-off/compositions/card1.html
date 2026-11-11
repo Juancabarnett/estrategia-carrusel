@@ -1,0 +1,88 @@
+<template>
+  <style>
+    @font-face { font-family: 'DNEmoji'; src: url('assets/fonts/emoji.ttf'); }
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; }
+    #wrap { position: absolute; left: 150px; top: 560px; width: 780px; transform-origin: 50% 0%; }
+    #shadow { position: absolute; left: -60px; right: -60px; top: -20px; height: 200px; border-radius: 120px; }
+    .card { position: relative; padding: 34px 38px; border-radius: 38px; }
+    .card.dark { background: #15121D; border: 1.5px solid rgba(196,166,255,0.2); color: #FFFFFF; }
+    .card.lite { background: #FFFFFF; border: 1.5px solid rgba(124,58,237,0.16); color: #16121F; }
+    #shadow.dark { background: radial-gradient(closest-side, rgba(124,58,237,0.42), rgba(124,58,237,0)); }
+    #shadow.lite { background: radial-gradient(closest-side, rgba(60,20,120,0.22), rgba(60,20,120,0)); }
+    .tag { display: inline-block; font-weight: 800; font-size: 20px; letter-spacing: 0.09em; padding: 9px 18px; border-radius: 999px; }
+    .dark .tag { color: #C4A6FF; background: rgba(124,58,237,0.22); }
+    .lite .tag { color: #6D28D9; background: rgba(124,58,237,0.10); }
+    .emo { font-family: 'DNEmoji'; }
+    .row { display: flex; align-items: center; justify-content: space-between; height: 74px; padding: 0 22px; margin-top: 10px; border-radius: 20px; }
+    .dark .row { background: rgba(255,255,255,0.055); }
+    .lite .row { background: #F5F2FA; }
+    .row .l { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 30px; }
+    .row .l .emo { font-size: 34px; }
+    .row .r { font-weight: 700; font-size: 26px; }
+    .row.hi { background: linear-gradient(90deg, rgba(94,11,139,0.6), rgba(124,58,237,0.5)); border: 1.5px solid rgba(196,166,255,0.5); }
+    .no { color: #FF6B81; }
+    .ok { color: #C4A6FF; }
+    .lite .ok { color: #6D28D9; }
+</style>
+  <div id="root" data-composition-id="card1" data-width="1080" data-height="1920">
+    <div id="wrap" data-layout-allow-overflow>
+      <div id="shadow" class="dark"></div>
+      <div id="card" class="card dark">
+        <div class="tag">CONCYTEC · ESCALAMIENTO TECNOLÓGICO</div>
+        <div id="num" style="margin-top:16px;font-weight:900;font-size:116px;letter-spacing:-0.035em;line-height:1.05;transform-origin:0 60%;">S/ 0</div>
+        <div id="lbl" style="margin-top:4px;font-weight:500;font-size:28px;color:#A9A3B8;">Subvención máxima por proyecto</div>
+        <div id="pill" style="display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:11px 24px;border-radius:999px;font-weight:800;font-size:28px;background:linear-gradient(90deg,#5E0B8B,#7C3AED);box-shadow:0 10px 30px rgba(124,58,237,0.45);">✓ No se devuelve</div>
+        <div style="margin-top:16px;">
+          <div class="row" id="r1"><div class="l"><span class="emo">🏦</span>Préstamo</div><div class="r no" id="r1s">Pagas intereses ✕</div></div>
+          <div class="row" id="r2"><div class="l"><span class="emo">🤝</span>Inversionista</div><div class="r no" id="r2s">Te quita acciones ✕</div></div>
+          <div class="row hi" id="r3"><div class="l"><span class="emo">🏛️</span>Esta subvención</div><div class="r" id="r3s" style="color:#FFFFFF;">100 % tuya ✓</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const card = document.getElementById("card");
+    const wrap = document.getElementById("wrap");
+    const shadow = document.getElementById("shadow");
+    const H = card.offsetHeight;
+    function bottomOf(sel) {
+      const e = document.querySelector(sel); let y = 0, n = e;
+      while (n && n !== card) { y += n.offsetTop; n = n.offsetParent; }
+      return Math.min(H, y + e.offsetHeight + 36);
+    }
+    function state(sel, s) {
+      const b = bottomOf(sel);
+      return { clip: "inset(0px 0px " + (H - b) + "px 0px round 38px)", y: 975 - 560 - s * b / 2, b: b };
+    }
+    function reveal(sel, t, s, d) {
+      const st = state(sel, s);
+      tl.to(card, { clipPath: st.clip, duration: d || 0.45, ease: "power3.out" }, t);
+      tl.to(wrap, { y: st.y, scale: s, duration: d || 0.45, ease: "power3.out" }, t);
+      tl.to(shadow, { height: st.b + 80, duration: d || 0.45, ease: "power3.out" }, t);
+    }
+
+    const s0 = state("#lbl", 1.16);tl.set(card, { clipPath: s0.clip }, 0); tl.set(shadow, { height: s0.b + 80 }, 0);tl.set(wrap, { y: s0.y, scale: 1.16 }, 0);
+(function(){const o={v:0};const el=document.querySelector("#num");tl.fromTo(o,{v:0},{v:1100000,duration:1.7,ease:"power2.out",onUpdate:()=>{el.textContent="S/ "+(Math.round(o.v/1000)*1000).toLocaleString("en-US").replace(/,/g," ");}},0.15);})();
+tl.fromTo("#num",{scale:1},{scale:1.1,duration:0.14,yoyo:true,repeat:1,ease:"power2.out"},1.86);
+tl.fromTo("#num",{color:"#FFFFFF"},{color:"#C4A6FF",duration:0.14,yoyo:true,repeat:1},1.86);
+tl.fromTo(wrap,{rotation:0},{rotation:-1.2,duration:1.6,yoyo:true,repeat:1,ease:"sine.inOut"},0.0);
+reveal("#pill", 2.98, 1.16, 0.45);
+tl.fromTo("#pill",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},3.04);
+reveal("#r1", 3.84, 1.0, 0.6);
+tl.fromTo("#r1",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},3.90);
+tl.fromTo("#r1s",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},4.24);
+tl.fromTo("#r1s",{x:-16},{x:0,duration:0.5,ease:"elastic.out(1.2,0.25)"},4.29);
+reveal("#r2", 4.88, 1.0, 0.45);
+tl.fromTo("#r2",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},4.88);
+tl.fromTo("#r2s",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},6.32);
+tl.fromTo("#r2s",{x:-16},{x:0,duration:0.5,ease:"elastic.out(1.2,0.25)"},6.37);
+reveal("#r3", 7.20, 1.0, 0.45);
+tl.fromTo("#r3",{opacity:0,x:60},{opacity:1,x:0,duration:0.35,ease:"power3.out"},7.20);
+tl.fromTo("#r3s",{opacity:0,scale:0.4},{opacity:1,scale:1,duration:0.38,ease:"back.out(2.6)"},8.40);
+tl.fromTo("#r3",{boxShadow:"0 0 0px rgba(124,58,237,0)"},{boxShadow:"0 0 48px rgba(124,58,237,0.8)",duration:0.32,yoyo:true,repeat:1,ease:"sine.inOut"},8.40);
+    tl.to(wrap, { x: -1250, rotation: -9, duration: 0.32, ease: "power3.in" }, 9.52);
+    window.__timelines["card1"] = tl;
+  </script>
+</template>
