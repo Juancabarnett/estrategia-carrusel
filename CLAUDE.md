@@ -4,6 +4,15 @@ Proyecto de videos cortos de la marca Data Nube (Lima, Perú). Responde siempre 
 
 Estas reglas vienen de las decisiones del usuario hasta el 10 de noviembre de 2026. Si una pide confirmar algo, pregunta antes de gastar dinero.
 
+## Herramienta de APIs: `scripts/dn.py`
+
+Úsala para voz, render y música, en la PC y en la nube. Lee el `.env` si existe; en la nube no hay `.env` y el proxy de network secrets agrega las keys.
+
+- `python3 scripts/dn.py balances`: saldos de HeyGen, ElevenLabs y Kie, sin costo.
+- `python3 scripts/dn.py tts <run> <guion_con_etiquetas.txt>`: voz con ElevenLabs v4 en `<run>/audio_final.mp3`.
+- `python3 scripts/dn.py heygen-render <run> --title "..."`: sube el audio y renderiza con Avatar V. Si se corta, repetir el mismo comando retoma el mismo video sin cobrar otra vez.
+- `python3 scripts/dn.py music <run> <prompt.json>`: música con Suno vía Kie y descarga las dos variantes.
+
 ## Dónde va cada cosa
 
 - Entregables de cada video: `outputs/avatar/<descripcion>-<YYYYMMDD-HHMMSS>/` (ver `CONTRACT.md`). Pruebas: `scratch/`.
