@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "updated": "GENERIC-TEMPLATE",
+  "owner": "avatar-reel-editing",
+  "applies_to": ["avatar_reel"],
+  "_note": "Hard values for Avatar Reel post-production. Colors, fonts and the title card are intentionally NEUTRAL — change them to your brand. The scripts read every value from this file, so editing here changes the output without touching code.",
+  "layout": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "broll_region": { "x": 0, "y": 0, "width": 1080, "height": 1152 },
+    "avatar_region": { "x": 0, "y": 1152, "width": 1080, "height": 768 },
+    "split_line_y": 1152
+  },
+  "title": {
+    "enabled_when_editorial_title_exists": true,
+    "asset": "title_card_reference_v2.png",
+    "manifest": "title_card_manifest.json",
+    "max_lines": 2,
+    "max_words": 6,
+    "visible_until_s_default": 2.7,
+    "position": {
+      "anchor": "center",
+      "center_x": 540,
+      "center_y": 1152,
+      "rule": "card crosses the avatar/B-roll split line"
+    },
+    "card": {
+      "width": 1000,
+      "height": 180,
+      "background": "#111111",
+      "_background_note": "Neutral dark card. Set this to your brand color.",
+      "radius": 24,
+      "padding_x": 56,
+      "padding_y": 24
+    },
+    "font": {
+      "family": "Arial Black",
+      "_family_note": "Generic bold fallback. For a branded look, install a wide bold display font and add its path first in `paths` below.",
+      "fallbacks": ["Arial Black", "Helvetica Neue", "Helvetica", "Arial"],
+      "paths": [
+        "/System/Library/Fonts/Supplemental/Arial Black.ttf",
+        "/System/Library/Fonts/Helvetica.ttc",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "C:/Windows/Fonts/ariblk.ttf"
+      ],
+      "size_default": 54,
+      "size_min": 40,
+      "size_max": 66,
+      "weight": "bold",
+      "letter_spacing": 0,
+      "line_gap": 8
+    },
+    "colors": {
+      "line_1": "#FFFFFF",
+      "line_2": "#FFFFFF",
+      "_colors_note": "Both lines white by default. Set line_2 to a brand accent color if you want a two-color title."
+    },
+    "animation": {
+      "name": "slide_fade_in_out",
+      "in": { "opacity_from": 0, "opacity_to": 1, "y_from": 28, "y_to": 0, "scale_from": 0.96, "scale_to": 1, "duration_s": 0.28, "ease": "power3.out" },
+      "out": { "opacity_from": 1, "opacity_to": 0, "y_from": 0, "y_to": -18, "duration_s": 0.24, "ease": "power2.in" }
+    }
+  },
+  "captions": {
+    "component": "white_editorial_chunks",
+    "provider": "hyperframes_smart_captions",
+    "project_dir": "hyperframes_captions_project",
+    "case": "uppercase",
+    "color": "#FFFFFF",
+    "outline_color": "#000000",
+    "outline_width_px": 5,
+    "font_family": "Arial",
+    "font_size_px": 54,
+    "max_words_per_caption": 3,
+    "single_line": true,
+    "background": "none",
+    "title_active_y": 1000,
+    "default_y": 1120,
+    "split_line_y": 1152,
+    "source_text_policy": "approved_script_or_corrected_transcript",
+    "timing_policy": "word_timestamps_reconciled_to_final_copy",
+    "sync": {
+      "preferred_transcriber": "npx hyperframes@latest transcribe --model small --language <LANG> --json",
+      "_transcriber_note": "Set <LANG> to your audio language (e.g. es, en, pt). Do NOT use Whisper .en models for non-English audio — they translate.",
+      "fallback_timing": "no_final_delivery_with_guessed_script_timing; use real word timestamps, forced alignment, or manually verified timing from actual audio",
+      "proportional_timing_final_allowed": false,
+      "require_real_audio_alignment_for_final": true,
+      "fail_when_transcriber_returns_zero_words": true,
+      "manual_sync_required_when_alignment_blocked": true,
+      "qa_sync_required_points": ["hook", "early_body", "mid_body", "closing", "cta"],
+      "max_visible_sync_drift_ms": 200,
+      "raw_asr_text_is_never_final_copy": true,
+      "script_word_count_exact_match_preferred": true,
+      "auto_align_small_mismatch_allowed": true,
+      "auto_align_min_similarity_ratio": 0.88,
+      "fail_on_low_confidence_alignment": true,
+      "event_start_lead_s": 0.035,
+      "event_tail_s": 0.055,
+      "event_tail_punctuation_s": 0.09,
+      "max_gap_inside_chunk_s": 0.42,
+      "min_event_duration_s": 0.32,
+      "cap_tail_before_next_caption": true,
+      "avoid_orphan_connectors": true,
+      "terminal_punctuation_hard_boundary": true,
+      "terminal_punctuation_marks": [".", "?", "!"],
+      "forbid_cross_sentence_caption_chunks": true,
+      "_chunk_note": "A caption never mixes the end of one sentence with the start of the next. Bad: \"DONE. AND NOW\". Good: \"DONE.\" / \"AND NOW\"."
+    }
+  },
+  "audio": {
+    "music_asset": "music.mp3",
+    "voice_is_primary": true,
+    "music_volume_default": 0.08,
+    "music_volume_min_without_reason": 0.04,
+    "music_volume_range": [0.04, 0.10],
+    "_music_note": "For spoken reels, music is a subtle bed, never a co-lead. 0.06-0.10 is plenty. The voice always wins.",
+    "voice_processing": { "loudnorm": "I=-16:TP=-1.5:LRA=8", "compressor": "gentle", "limiter": "final" },
+    "ducking": {
+      "filter": "sidechaincompress",
+      "threshold": 0.03,
+      "threshold_range": [0.025, 0.035],
+      "ratio": 8,
+      "ratio_range": [6, 9],
+      "attack": 12,
+      "release": 300
+    },
+    "mixing": { "amix_normalize": 0, "duration": "first", "final_limiter": true },
+    "sfx": {
+      "plan_artifact": "sfx_plan.json",
+      "library": "sfx/library.json",
+      "run_assets_dir": "sfx/",
+      "volume_default": 0.2,
+      "volume_range": [0.1, 0.3],
+      "max_hits_per_30s": 8,
+      "max_hits_per_beat": 1,
+      "hook_max_hits": 2,
+      "min_spacing_s": 2,
+      "anchor_policy": "visual_events_only_never_words_or_captions",
+      "sidechain": false,
+      "never_mask_phrase_start": true,
+      "mix_trace_field": "final_mix_manifest.json.sfx[]"
+    }
+  },
+  "qa": {
+    "required_files": ["title_card_manifest.json", "captions_style.json", "final_mix_manifest.json", "post_render_qa_report.json"],
+    "required_frames": ["qa/title_frame.png", "qa/post_title_frame.png"],
+    "checks": [
+      "title_card_radius_24",
+      "title_centered_on_split_line",
+      "captions_above_split_not_on_avatar",
+      "captions_not_hidden_by_overlays",
+      "music_present_and_audible",
+      "voice_clear_after_ducking",
+      "sfx_hits_match_plan_and_do_not_mask_voice",
+      "no_black_frames_or_wrong_boundary_frames"
+    ]
+  }
+}

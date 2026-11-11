@@ -1,0 +1,97 @@
+{
+  "_README": "This is the ONE file you must edit to make the pack yours. Put your own avatar + voice here. Nothing else in the pack hardcodes an identity. Fill every <PLACEHOLDER>.",
+  "version": 1,
+  "default_owner": "me",
+  "identities": {
+    "me": {
+      "display_name": "Data Nube",
+
+      "heygen_avatar_id": "da8e547d52d6412eabd2589473c49ff6",
+      "_heygen_avatar_id_note": "The look/avatar id of YOUR trained HeyGen avatar. Get it with `heygen avatar looks list --group-id $AVATAR_GROUP_ID --ownership private` or from the HeyGen dashboard. It must support Avatar V (see SKILL.md).",
+
+      "elevenlabs_voice_id": "4URstKpRRZV6Dkdk2zMj",
+      "elevenlabs_voice_name": "Juanca de Data Nube",
+      "_elevenlabs_note": "Required. This cloned voice is the only voice engine for the reels.",
+
+      "visual_reference_dir": "<OPTIONAL: absolute path to a folder of real photos of the avatar person>",
+      "visual_reference_role": "canonical_photo_pool",
+      "_visual_reference_note": "Used ONLY for likeness QA (does the render still look like the person?). Never used to generate. Leave empty if you don't have one.",
+
+      "visual_spec": {
+        "name": "my_avatar_v_canon",
+        "appearance_source_of_truth": "heygen_avatar_id",
+        "appearance_note": "Face, hair and features are fixed by the trained HeyGen avatar. Do NOT describe invented facial features in prompts.",
+        "wardrobe": "Whatever the trained avatar wears. Don't ask for per-scene outfit changes. A different outfit = a different look that must be declared explicitly.",
+        "background": { "type": "native", "value": "avatar_room", "note": "Keep the look's own room background, approved by the user. Omit the `background` field from the HeyGen request and do not send `remove_background`." },
+        "render_aspect_ratio": "16:9",
+        "render_resolution": "720p",
+        "framing_default": "chest_up_for_calm_segments",
+        "framing_rationale": "The active look is a close chest-up shot with no hands in frame, so the face leads the bottom 40% of the split.",
+        "hands_visible_requested": false,
+        "composite_placement": { "region": "bottom_40pct", "height_px": 768, "split_line_y": 1152, "master": "1080x1920" },
+        "approved_framings": ["chest_up_for_calm_segments"],
+        "approved_expressions": ["confident", "sincere", "warm", "enthusiastic"],
+        "negative_rules": [
+          "no warping of hands/fingers or artifacts on the face",
+          "no crop that cuts the head or hides the hands when gestures were requested",
+          "no identity/avatar change between shots of the same reel",
+          "no generated backgrounds or background colors other than the declared one unless an approved brand system says so",
+          "no lipsync out of sync with audio_final"
+        ],
+        "acceptance_checklist": [
+          "full face in frame, no warping, no double face",
+          "native room background kept, not replaced by a flat color",
+          "lipsync matches audio_final (check hook, middle and close)",
+          "same avatar/look as the rest of the shots in the reel",
+          "engine confirmed avatar_v in video_result.json"
+        ]
+      },
+
+      "preferred_voice_mode": "elevenlabs_tts",
+      "_preferred_voice_mode_note": "\"elevenlabs_tts\" = your cloned voice speaks the script directly with ElevenLabs, no Gemini (see voice_generation_canon.elevenlabs_tts). \"gemini_tts_only\" = Gemini TTS is the final voice. \"gemini_tts_elevenlabs\" = Gemini TTS drives the performance, then ElevenLabs speech-to-speech swaps in your cloned voice (needs elevenlabs_voice_id + ELEVENLABS_API_KEY).",
+
+      "voice_generation_canon": {
+        "name": "default_reel_voice",
+        "_note": "Define YOUR speaker here. These are neutral defaults — rewrite them to your character, language and accent. None of this is prescriptive.",
+        "gemini": {
+          "model": "gemini-3.1-flash-tts-preview",
+          "voiceName": "Puck",
+          "_voiceName_note": "Pick one of the 30 Gemini voices (see tts-ugc/SKILL.md). Keep it consistent across all segments of a reel.",
+          "audio_profile": "A Peruvian creator from Lima behind the brand Data Nube, giving a sharp personal opinion on the news straight to camera. Sounds like a real person with a point of view, not a TV anchor or radio announcer.",
+          "style": "News opinion commentary: confident, direct and analytical, with conviction on the key point and a conversational, credible delivery.",
+          "accent": "Native Peruvian Spanish from Lima (limeño): clear, well-articulated consonants and natural Lima intonation. Not Spain Spanish, not Mexican, not generic neutral Latin American.",
+          "pacing": "Fast and punchy from the first word. Keep momentum, but make punchlines clear.",
+          "segment_pacing": "Fast and punchy, but clear. Do not rush so much that words collapse.",
+          "energy": "Medium-high, confident and engaged, rising on the main opinion.",
+          "transcript_tag": "[speaking quickly]",
+          "generation_strategy": "one_tts_call_per_script_segment",
+          "post_processing": {
+            "concat_source": "raw_gemini_segments",
+            "tempo_filter": "atempo=1.0",
+            "_tempo_note": "Optional speed-up for punchier UGC. 1.0 = no change. Raise toward 1.1-1.3 if your delivery feels slow. Apply AFTER concatenation, before any voice change.",
+            "normalization_filter": "loudnorm=I=-16:TP=-1.5:LRA=11",
+            "avoid_filters": ["destructive silenceremove before concatenation"]
+          }
+        },
+        "elevenlabs_tts": {
+          "voice_id": "4URstKpRRZV6Dkdk2zMj",
+          "voice_name": "Juanca de Data Nube",
+          "model_id": "eleven_v4",
+          "language_code": "es",
+          "output_format": "mp3_44100_192",
+          "settings": { "stability": 0.4, "similarity_boost": 0.75 },
+          "_note": "eleven_v4 is text-to-speech only. It has no speech-to-speech mode, so it cannot replace the model in elevenlabs_sts."
+        },
+        "elevenlabs_sts": {
+          "voice_id": "4URstKpRRZV6Dkdk2zMj",
+          "voice_name": "<your voice name>",
+          "model_id": "eleven_multilingual_sts_v2",
+          "settings": { "stability": 0.4, "similarity_boost": 0.75, "style": 0.2, "use_speaker_boost": true }
+        }
+      }
+    }
+  },
+  "blocked_unless_explicit_owner": {},
+  "_blocked_note": "Optional safety net. If you keep multiple identities here, list any that must never be used as a silent fallback, e.g. { \"someone_else\": { \"heygen_avatar_id\": \"...\", \"reason\": \"...\" } }. identity_guard.py refuses to use a blocked id unless its owner is requested explicitly.",
+  "required_sidecar": "identity_guard.json"
+}

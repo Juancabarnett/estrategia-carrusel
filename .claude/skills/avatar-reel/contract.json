@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "skill": { "id": "avatar-reel", "class": "orchestrator" },
+  "stages": [
+    {
+      "flow": "avatar_reel",
+      "id": "source_harvest",
+      "summary": "Downloaded sources, research manifest and editorial sidecars produced before the script.",
+      "artifacts": [
+        { "path": "source_assets/manifest.json", "kind": "json", "role": "source_manifest" },
+        { "path": "source_assets/video_perception_manifest.json", "kind": "json", "role": "video_perception_manifest" },
+        { "path": "creative_brief.json", "kind": "json", "role": "creative_brief" },
+        { "path": "hook_variants.json", "kind": "json", "role": "hook_variants" },
+        { "path": "angle_selection.json", "kind": "json", "role": "angle_selection" },
+        { "path": "visual_beat_plan.json", "kind": "json", "role": "visual_beat_plan" },
+        { "path": "reel_direction.json", "kind": "json", "role": "reel_direction" },
+        { "path": "source_assets/*", "kind": "other", "role": "source_asset" }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "script",
+      "summary": "Script + editorial review. Run by /guion-ugc with the editorial layer of this skill and the /script-framework lens.",
+      "requirements": { "skill": "guion-ugc", "framework_skill": "script-framework", "editorial_gate": "editorial_review.json" },
+      "artifacts": [
+        { "path": "script.txt", "kind": "other", "role": "script_text" },
+        { "path": "script.md", "kind": "markdown", "role": "script_md" },
+        { "path": "script.json", "kind": "json", "role": "script_json" },
+        { "path": "editorial_review.json", "kind": "json", "role": "editorial_review" }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "tts",
+      "summary": "Final voice via ElevenLabs Eleven v4 text to speech with the cloned voice. Run by /tts-ugc.",
+      "requirements": { "skill": "tts-ugc", "identity_gate": "identity_guard.json" },
+      "artifacts": [
+        { "path": "audio_final.mp3", "kind": "audio", "role": "final_audio" },
+        { "path": "audio_final.wav", "kind": "audio", "role": "final_audio_wav" }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "voice_change",
+      "summary": "Not used. preferred_voice_mode is elevenlabs_tts, so always mark this stage skipped.",
+      "requirements": { "skill": "tts-ugc", "identity_gate": "identity_guard.json", "optional": true },
+      "artifacts": []
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "avatar",
+      "summary": "Avatar render with HeyGen Avatar V via /v3/videos.",
+      "requirements": {
+        "api_path": "/v3/videos",
+        "api_route": "POST /v3/videos",
+        "cli_route_if_engine_supported": "heygen video create",
+        "avatar_engine_required": "avatar_v",
+        "engine": {
+          "request_body_field": "engine.type",
+          "required_value": "avatar_v",
+          "omitted_default": "avatar_iv",
+          "missing_or_wrong_failure_code": "avatar_v_request_missing"
+        },
+        "credential_env": {
+          "required": ["HEYGEN_API_KEY", "AVATAR_GROUP_ID"],
+          "optional": ["AVATAR_LOOK_ID"],
+          "canonical_sources": ["process.env", "$PROJECT/.env"],
+          "missing_env_failure_code": "missing_heygen_env"
+        },
+        "forbidden_api_paths": ["/v1/video/generate", "/v2/video/generate"],
+        "forbidden_commands": ["heygen lipsync"],
+        "forbidden_external_lipsync_providers": ["fal-ai/sync-lipsync", "Sync", "Kling lip sync"],
+        "forbidden_payload_fields": ["avatar_style"],
+        "forbidden_payload_fields_without_avatar_v_custom_motion_schema_support": ["motion_prompt", "expressiveness"],
+        "engine_gate": {
+          "preferred_endpoint": "GET /v3/avatars/looks/{look_id}",
+          "preferred_cli": "heygen avatar looks get <look-id>",
+          "list_fallback_cli": "heygen avatar looks list --group-id $AVATAR_GROUP_ID --ownership private --limit 50",
+          "look_id_is_avatar_id": true,
+          "ready_status": "completed",
+          "field": "supported_api_engines",
+          "must_include": "avatar_v",
+          "failure_code": "avatar_v_unavailable"
+        },
+        "request_trace_fields": [
+          "api_path", "api_route", "avatar_engine_required", "engine", "engine.type",
+          "supported_api_engines", "avatar_id", "audio_asset_id", "audio_url",
+          "aspect_ratio", "resolution", "output_format", "framing", "hands_visible_requested",
+          "avatar_motion_plan_path"
+        ]
+      },
+      "artifacts": [
+        { "path": "video_avatar.mp4", "kind": "video", "role": "avatar_render" },
+        { "path": "avatar_motion_plan.json", "kind": "json", "role": "avatar_motion_plan" },
+        { "path": "video_request.json", "kind": "json", "role": "avatar_request" },
+        { "path": "video_result.json", "kind": "json", "role": "avatar_result" },
+        { "path": "asset_upload.json", "kind": "json", "role": "avatar_asset_upload" },
+        { "path": "avatar_render_qa.json", "kind": "json", "role": "avatar_render_qa" }
+      ],
+      "render_acceptance_gate": {
+        "spec_source": "identity_guard.json.visual_spec",
+        "checklist": "visual_spec.acceptance_checklist",
+        "artifact": "avatar_render_qa.json",
+        "block_on_fail": true
+      }
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "hook_visual",
+      "summary": "Hook visual plan/clip and animated title card.",
+      "requirements": {
+        "post_skill": "avatar-reel-editing",
+        "canon": ".claude/skills/avatar-reel-editing/references/avatar_reel_post_canon.json",
+        "title_card_manifest": "title_card_manifest.json"
+      },
+      "artifacts": [
+        { "path": "hook_visual_plan.json", "kind": "json", "role": "hook_plan" },
+        { "path": "title_card_reference_v2.png", "kind": "image", "role": "title_card_reference" },
+        { "path": "title_card_manifest.json", "kind": "json", "role": "title_card_manifest" },
+        { "path": "hook_visual.mp4", "kind": "video", "role": "hook_visual", "aliases": ["hook.mp4"] }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "broll",
+      "summary": "Designed b-roll (HyperFrames) or downloaded factual material, edited as a timeline per reel_direction.json.",
+      "requirements": {
+        "design_system_source": "reel_direction.json",
+        "anti_repetition": "do not repeat (asset, media_start) nor overlapping ranges before useful ranges are exhausted",
+        "visual_qa_required": true
+      },
+      "artifacts": [
+        { "path": "broll_top.mp4", "kind": "video", "role": "broll" },
+        { "path": "broll_timing.json", "kind": "json", "role": "broll_timing" },
+        { "path": "broll_hyperframes/*", "kind": "other", "role": "broll_project" },
+        { "path": "broll_visual_qc.json", "kind": "json", "role": "broll_visual_qc" }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "composite",
+      "summary": "9:16 composition before the final mix.",
+      "requirements": {
+        "post_skill": "avatar-reel-editing",
+        "layout_canon": "1080x1920 split, broll 60%, avatar 40%, split_line_y=1152"
+      },
+      "artifacts": [
+        { "path": "video_composite.mp4", "kind": "video", "role": "composite_video", "aliases": ["final_composite.mp4"] }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "captions",
+      "summary": "HyperFrames Smart Captions in the split layout, preserving the safe zone above the avatar seam.",
+      "requirements": {
+        "post_skill": "avatar-reel-editing",
+        "canon": ".claude/skills/avatar-reel-editing/references/avatar_reel_post_canon.json",
+        "provider": "hyperframes_smart_captions",
+        "component": "white_editorial_chunks",
+        "title_active_y": 1000,
+        "default_y": 1120,
+        "split_line_y": 1152,
+        "max_words_per_caption": 3
+      },
+      "artifacts": [
+        { "path": "captions.srt", "kind": "other", "role": "caption_source", "aliases": ["captions.ass"] },
+        { "path": "captions.words.json", "kind": "json", "role": "caption_words" },
+        { "path": "captions_style.json", "kind": "json", "role": "captions_style" },
+        { "path": "hyperframes_captions_manifest.json", "kind": "json", "role": "caption_manifest" },
+        { "path": "hyperframes_captions_project/*", "kind": "other", "role": "caption_project" },
+        { "path": "video_captioned.mp4", "kind": "video", "role": "captioned_video", "aliases": ["composite_captioned.mp4"] }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "music",
+      "summary": "Instrumental music bed (Suno via Kie.ai) matching the reel mood. Run by /music-ugc.",
+      "requirements": { "skill": "music-ugc", "instrumental": true, "optional": true },
+      "artifacts": [
+        { "path": "music.mp3", "kind": "audio", "role": "music" },
+        { "path": "music_prompt.json", "kind": "json", "role": "music_prompt" },
+        { "path": "music_task.json", "kind": "json", "role": "music_task" }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "sfx",
+      "summary": "Strategic SFX from the shared sfx/ library, anchored to visual events. Sourcing/plan via /sfx-ugc; mix runs in final via /avatar-reel-editing.",
+      "requirements": {
+        "skill": "sfx-ugc",
+        "helper": ".claude/skills/sfx-ugc/scripts/sfx_lib.py",
+        "library_first": "sfx/library.json",
+        "optional": true,
+        "max_hits_per_30s": 8,
+        "max_hits_per_beat": 1,
+        "hook_max_hits": 2,
+        "min_spacing_s": 2,
+        "anchor_policy": "visual_events_only_never_words_or_captions"
+      },
+      "artifacts": [
+        { "path": "sfx_plan.json", "kind": "json", "role": "sfx_plan" },
+        { "path": "sfx/*", "kind": "audio", "role": "sfx_assets" }
+      ]
+    },
+    {
+      "flow": "avatar_reel",
+      "id": "final",
+      "summary": "Final master of the avatar reel.",
+      "requirements": {
+        "post_skill": "avatar-reel-editing",
+        "canon": ".claude/skills/avatar-reel-editing/references/avatar_reel_post_canon.json",
+        "music_mix_manifest": "final_mix_manifest.json",
+        "qa_manifest": "post_render_qa_report.json",
+        "music_ducking_required_when_music_exists": true
+      },
+      "artifacts": [
+        { "path": "final.mp4", "kind": "video", "role": "final", "aliases": ["reel_final.mp4", "video_final.mp4"] },
+        { "path": "final_mix_manifest.json", "kind": "json", "role": "final_mix_manifest" },
+        { "path": "post_render_qa_report.json", "kind": "json", "role": "post_render_qa_report" }
+      ]
+    }
+  ],
+  "flow": {
+    "id": "avatar_reel",
+    "label": "Avatar Reel",
+    "kind": "video",
+    "aspect_ratio": "9:16",
+    "desc": "Digital avatar speaking in your voice, with inserts and final mix.",
+    "storage_folder": "avatar",
+    "launcher": {
+      "fields": [
+        { "key": "source", "label": "Source / topic (URL, asset, or describe the topic)", "kind": "textarea", "required": true },
+        { "key": "avatar_id", "label": "HeyGen avatar_id (optional; empty = default identity from identity.json)", "kind": "text", "required": false },
+        { "key": "voice", "label": "ElevenLabs voice_id (optional; empty = default identity from identity.json)", "kind": "text", "required": false }
+      ]
+    },
+    "stages": [
+      { "id": "source_harvest", "label": "Sources", "skill": "avatar-reel", "optional": true },
+      { "id": "script", "label": "Script + review", "skill": "guion-ugc" },
+      { "id": "tts", "label": "Voice (ElevenLabs v4)", "skill": "tts-ugc" },
+      { "id": "voice_change", "label": "Voice change (not used)", "skill": "tts-ugc", "optional": true },
+      { "id": "avatar", "label": "Avatar (HeyGen Avatar V)", "skill": "avatar-reel" },
+      { "id": "hook_visual", "label": "Hook visual + title", "skill": "avatar-reel-editing" },
+      { "id": "broll", "label": "B-roll (HyperFrames)", "skill": "avatar-reel-editing", "optional": true },
+      { "id": "composite", "label": "9:16 composite", "skill": "avatar-reel-editing" },
+      { "id": "captions", "label": "Captions (HyperFrames)", "skill": "avatar-reel-editing", "optional": true },
+      { "id": "music", "label": "Music (Suno)", "skill": "music-ugc", "optional": true },
+      { "id": "sfx", "label": "SFX (library)", "skill": "sfx-ugc", "optional": true },
+      { "id": "final", "label": "Final mix", "skill": "avatar-reel-editing" }
+    ],
+    "final_artifact": { "path": "final.mp4", "kind": "video", "role": "final", "aliases": ["reel_final.mp4", "video_final.mp4"] },
+    "sidecars": [
+      { "path": "run.json", "kind": "json", "role": "run_state", "required": true },
+      { "path": "logs/events.ndjson", "kind": "other", "role": "event_log", "required": true },
+      { "path": "creative_brief.json", "kind": "json", "role": "creative_brief" },
+      { "path": "hook_variants.json", "kind": "json", "role": "hook_variants" },
+      { "path": "angle_selection.json", "kind": "json", "role": "angle_selection" },
+      { "path": "visual_beat_plan.json", "kind": "json", "role": "visual_beat_plan" },
+      { "path": "reel_direction.json", "kind": "json", "role": "reel_direction" },
+      { "path": "identity_guard.json", "kind": "json", "role": "identity_guard" },
+      { "path": "avatar_render_qa.json", "kind": "json", "role": "avatar_render_qa" },
+      { "path": "editorial_review.json", "kind": "json", "role": "editorial_review" },
+      { "path": "title_card_manifest.json", "kind": "json", "role": "title_card_manifest" },
+      { "path": "sfx_plan.json", "kind": "json", "role": "sfx_plan" },
+      { "path": "final_mix_manifest.json", "kind": "json", "role": "final_mix_manifest" },
+      { "path": "post_render_qa_report.json", "kind": "json", "role": "post_render_qa_report" }
+    ]
+  }
+}

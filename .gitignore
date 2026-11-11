@@ -1,0 +1,14 @@
+.env
+outputs/
+scratch/
+_research/
+tmp/
+__pycache__/
+*.pyc
+tools/earshot/venv/
+.claude/settings.local.json
+*.mp4
+*.wav
+*.webm
+node_modules/
+.hyperframes/

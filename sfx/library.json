@@ -1,0 +1,487 @@
+{
+  "version": 1,
+  "updated": "GENERIC-TEMPLATE",
+  "purpose": "Shared SFX index for all flows (avatar_reel etc.). Search HERE before downloading a new SFX. Entries point to the HeyGen sound catalog by id; the .mp3 files are NOT shipped — re-fetch and process them with `sfx_lib.py add` (needs the HeyGen CLI). design_systems are neutral tags you can rename for your own visual systems.",
+  "source_catalog": "heygen audio sounds list --type sound_effects --query '<desc>' (HeyGen CLI >= v0.1.1)",
+  "signature_processing": {
+    "note": "Every new SFX is processed with a consistent signature chain before entering the library: resample 48k, highpass, subtle pitch per class, peak-normalize to -3 dBFS, anti-click fades (5ms in / 40ms out), mp3 192k. This is what makes the set feel cohesive. Tune to taste.",
+    "pitched_v1": "asetrate 48000*0.94 + atempo 1.06383 (≈ -1 semitono, house timbre for whoosh/glass/ui/pop/sparkle) + highpass 80Hz",
+    "impact_v1": "asetrate 48000*0.92 + atempo 1.08696 (≈ -1.4 semitonos, más peso) + highpass 35Hz",
+    "natural_v1": "sin pitch (sonidos icónicos: paper/arcade/foley) + highpass 70Hz",
+    "riser_v1": "sin pitch + highpass 50Hz"
+  },
+  "sfx": [
+    {
+      "id": "whoosh-airy-soft",
+      "file": "whoosh/airy-soft.mp3",
+      "category": "whoosh",
+      "description": "A clean, medium-length swoosh with a distinct airy texture, suggesting a quick pass of something substantial but not heavy. Use cases: scene transition; game ability; motion graphic; uI feedback; fast object movement; ac",
+      "use_for": [
+        "transición de beat",
+        "entrada de title card",
+        "cambio de sección"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Default whoosh.",
+      "duration_s": 0.41,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "df8c73ce46972f98",
+        "heygen_name": "Swoosh 2"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "whoosh-swipe-ui",
+      "file": "whoosh/swipe-ui.mp3",
+      "category": "whoosh",
+      "description": "A medium-length, clean whoosh with a clear rising pitch, ideal for digital interfaces or quick, precise movements. Use cases: uI navigation; app transition; game menu interaction; graphic animation; popup reveal; text re",
+      "use_for": [
+        "corte de b-roll",
+        "swipe entre proof cards",
+        "entrada de widget"
+      ],
+      "design_systems": [
+        "glass_ui",
+        "any"
+      ],
+      "editorial_note": "Pitch ascendente, ideal UI.",
+      "duration_s": 0.3,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "0fae75b09276c9f5",
+        "heygen_name": "Swipe whoosh"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "whoosh-dry-fast",
+      "file": "whoosh/dry-fast.mp3",
+      "category": "whoosh",
+      "description": "A very quick, dry, and sharp whoosh sound, like a fast swipe or a light object cutting through the air rapidly. Use cases: quick transition; uI feedback for rapid actions; sword swipe; cartoon movement; menu navigation; ",
+      "use_for": [
+        "corte rápido en hook dinámico",
+        "flick de elemento"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Seco y corto, para hooks con cortes 0.7-1.5s.",
+      "duration_s": 0.44,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "0e2e02da84931b22",
+        "heygen_name": "Whoosh"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "impact-bass-title",
+      "file": "impact/bass-title.mp3",
+      "category": "impact",
+      "description": "A deep, resonant bass impact with a subtle, almost rubbery or squishy low-end texture, suggesting a heavy, impactful force with a slight give. Use cases: cinematic punch; heavy object fall; monster step; sci-fi weapon im",
+      "use_for": [
+        "aterrizaje de title card",
+        "statement fullscreen",
+        "cierre de hook"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Boom grave con cola; usar con fade temprano si pisa voz.",
+      "duration_s": 2.64,
+      "processing": "impact_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "9c635c3436654818",
+        "heygen_name": "Impact Bass"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "impact-ground-short",
+      "file": "impact/ground-short.mp3",
+      "category": "impact",
+      "description": "A resonant and slightly sustained impact sound, suggesting a substantial object hitting the ground with a deep, full body, and a short, decaying rumble, indicating a broader contact area or a larger object than a simple ",
+      "use_for": [
+        "punch de dato fuerte",
+        "aparición de número/precio"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Hit más corto y liviano que bass-title.",
+      "duration_s": 1.1,
+      "processing": "impact_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "8639f57528857966",
+        "heygen_name": "Ground Impact"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "paper-page-turn-a",
+      "file": "paper/page-turn-a.mp3",
+      "category": "paper",
+      "description": "A classic page-turning sound effect. This is used to indicate flipping a page in a book, magazine, or document. Use cases: reading animation; document interaction UI; storytelling sound design; e-book page flip; comic bo",
+      "use_for": [
+        "cambio de card editorial",
+        "transición entre secciones paper"
+      ],
+      "design_systems": [
+        "editorial"
+      ],
+      "editorial_note": "Canon para canvas ivory/papel.",
+      "duration_s": 1.02,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "9b77ef762e4f45f2",
+        "heygen_name": "Page Turn"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "paper-page-turn-b",
+      "file": "paper/page-turn-b.mp3",
+      "category": "paper",
+      "description": "The crisp, rustling sound of a single page being turned in a book or document. Commonly used to signify a change in content or progression within a story. Use cases: indicating a narrative progression in an audiobook; so",
+      "use_for": [
+        "variante de page turn para no repetir"
+      ],
+      "design_systems": [
+        "editorial"
+      ],
+      "editorial_note": "Alternar con page-turn-a.",
+      "duration_s": 1.2,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "4eb2324a49d37068",
+        "heygen_name": "Page Turn"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "glass-clink-gentle",
+      "file": "glass/clink-gentle.mp3",
+      "category": "glass",
+      "description": "The soft, delicate sound of two glass objects making light contact, producing a subtle, high-pitched ringing. Use cases: toasting with drinks; placing a glass on a table; subtle celebratory moment; background ambiance in",
+      "use_for": [
+        "aparición de glass card",
+        "toque de widget"
+      ],
+      "design_systems": [
+        "glass_ui"
+      ],
+      "editorial_note": "Sutil, casi subliminal.",
+      "duration_s": 0.26,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "ee5e8476e584cfdc",
+        "heygen_name": "Gentle Glass Clink"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "ui-ping-bright",
+      "file": "ui/ping-bright.mp3",
+      "category": "ui",
+      "description": "A single, clear, and bright 'ping' sound, often associated with a notification or a small confirmation in a digital interface. Use cases: new message notification; task completion; system alert; game event; uI feedback; ",
+      "use_for": [
+        "confirmación",
+        "dato clave on-screen",
+        "notificación limpia"
+      ],
+      "design_systems": [
+        "glass_ui",
+        "any"
+      ],
+      "editorial_note": "Ping de confirmación.",
+      "duration_s": 0.56,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "faadba062fe92c11",
+        "heygen_name": "Ping"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "ui-pop-soft",
+      "file": "ui/pop-soft.mp3",
+      "category": "ui",
+      "description": "A subtle and somewhat muffled pop sound, less sharp than a standard pop, designed to be unobtrusive and blend into a user interface. Use cases: background UI feedback; toggling a setting; checkbox selection; loading indi",
+      "use_for": [
+        "entrada de card/caption-card",
+        "aparición de elemento suave"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Pop discreto multiuso.",
+      "duration_s": 1.01,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "13175e257d71f2fa",
+        "heygen_name": "Soft UI Pop"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "ui-click-generic",
+      "file": "ui/click-generic.mp3",
+      "category": "ui",
+      "description": "A clean, simple 'click' sound, medium in pitch, suitable for general user interface interactions. Use cases: game UI feedback; app navigation; website interaction; menu selection; confirmation prompt; interactive element",
+      "use_for": [
+        "cursor/click en demo",
+        "toggle on-screen"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Click corto para screencasts.",
+      "duration_s": 0.15,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "fa09ed3ae6377e67",
+        "heygen_name": "Generic Click"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "ui-pop-standard",
+      "file": "ui/pop-standard.mp3",
+      "category": "ui",
+      "description": "A crisp, clear, and percussive pop sound with a distinct and immediate attack, like a finger snap or a small bubble bursting. Use cases: button click feedback; uI element interaction; menu selection; short notification a",
+      "use_for": [
+        "badge/emoji pop",
+        "aparición puntual"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Más presente que pop-soft.",
+      "duration_s": 0.26,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "11246ca7e351bf60",
+        "heygen_name": "Standard Pop"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "arcade-coin-chime",
+      "file": "arcade/coin-chime.mp3",
+      "category": "arcade",
+      "description": "A classic, high-pitched chime indicating the collection of a single coin or small item in a game. Use cases: picking up an item in a video game; earning a small reward; confirming a selection in a retro UI; collecting po",
+      "use_for": [
+        "insert pixel insert pixel",
+        "beat de ganancia/feature"
+      ],
+      "design_systems": [
+        "pixel_insert"
+      ],
+      "editorial_note": "Moneda 8-bit; pixel-insert canon.",
+      "duration_s": 0.75,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "54b0e998c19e209e",
+        "heygen_name": "Coin Collect Chime"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "arcade-achievement",
+      "file": "arcade/achievement.mp3",
+      "category": "arcade",
+      "description": "A classic bright and celebratory chime often used to mark a successful completion or achievement in a game or application. Use cases: game achievement; task completion; level up; app notification. Also known as: win, suc",
+      "use_for": [
+        "payoff pixel insert",
+        "logro/resultado desbloqueado"
+      ],
+      "design_systems": [
+        "pixel_insert"
+      ],
+      "editorial_note": "Jingle de logro; máx 1 por reel.",
+      "duration_s": 1.77,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "89c6360f3cbeb3be",
+        "heygen_name": "Achievement"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "arcade-boing-single",
+      "file": "arcade/boing-single.mp3",
+      "category": "arcade",
+      "description": "A very quick, singular 'boing' sound, like a spring being released or a cartoon character bouncing. It's a clean, short, and impactful sound. Use cases: cartoon jump; transition effect; notification sound; game sound eff",
+      "use_for": [
+        "gag visual pixel insert",
+        "rebote cómico"
+      ],
+      "design_systems": [
+        "pixel_insert"
+      ],
+      "editorial_note": "Spring cartoon; humor seco, no abusar.",
+      "duration_s": 0.5,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "f35ddfa09d9f17d3",
+        "heygen_name": "Single Boing"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "riser-classic-build",
+      "file": "riser/classic-build.mp3",
+      "category": "riser",
+      "description": "A classic ascending riser that slowly builds in pitch and volume to create a sense of anticipation and climax, starting with a clean, sustained tone. Use cases: scene transition; tension build-up; climax indicator; video",
+      "use_for": [
+        "build hacia rehook",
+        "tensión pre-payoff",
+        "entrada a CTA"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Riser 4.4s; cortar al punto de impacto, no dejar la cola.",
+      "duration_s": 4.42,
+      "processing": "riser_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "a914db1dbd0e0bc3",
+        "heygen_name": "Riser"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "sparkle-magic-twinkle",
+      "file": "sparkle/magic-twinkle.mp3",
+      "category": "sparkle",
+      "description": "A magical, twinkling sound effect, like fairy dust or a momentary burst of enchantment. Use cases: magical spell cast; item pickup; power-up notification; uI element activation. Also known as: glitter, magic wand, fairy ",
+      "use_for": [
+        "reveal genAI",
+        "aparición de imagen generada",
+        "efecto wow"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Twinkle para reveals de IA generativa.",
+      "duration_s": 1.81,
+      "processing": "pitched_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "70074e2acc630265",
+        "heygen_name": "Sparkle"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "foley-cash-kaching",
+      "file": "foley/cash-kaching.mp3",
+      "category": "foley",
+      "description": "The iconic, sharp 'kaching' sound of a traditional cash register drawer opening, often associated with a sale. Use cases: confirming a successful purchase; indicating a sale in a retail setting; earning money in a busine",
+      "use_for": [
+        "beat de plata/ingresos/pricing",
+        "ROI/ahorro"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Kaching clásico; money/revenue/pricing beats.",
+      "duration_s": 1.27,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "28b6e4d75153f21b",
+        "heygen_name": "Cash Register 'Kaching'"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "foley-camera-shutter",
+      "file": "foley/camera-shutter.mp3",
+      "category": "foley",
+      "description": "A very quick, crisp, and mechanical 'click' sound, reminiscent of an older film camera's shutter engaging, with a clear, single percussive element. Use cases: indicating a photo being taken in an app; retro photography e",
+      "use_for": [
+        "proof card/screenshot que entra",
+        "freeze de evidencia"
+      ],
+      "design_systems": [
+        "editorial",
+        "any"
+      ],
+      "editorial_note": "Shutter para evidencia factual.",
+      "duration_s": 0.25,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "7e44f6516086da60",
+        "heygen_name": "Camera Shutter Click"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "foley-typing-light",
+      "file": "foley/typing-light.mp3",
+      "category": "foley",
+      "description": "A quick, concise burst of typing, possibly from a mobile device or a very compact keyboard, with a light and delicate sound. Use cases: texting scene; quick message; interface interaction; brief data input; notification ",
+      "use_for": [
+        "beat de código/prompt",
+        "code editor typing demo"
+      ],
+      "design_systems": [
+        "editorial",
+        "any"
+      ],
+      "editorial_note": "Tipeo liviano para temas dev.",
+      "duration_s": 1.47,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "420ffbbe7d451a68",
+        "heygen_name": "Typing"
+      },
+      "added": "2026-06-11"
+    },
+    {
+      "id": "foley-vinyl-stop",
+      "file": "foley/vinyl-stop.mp3",
+      "category": "foley",
+      "description": "A classic vinyl record stop sound, reminiscent of a turntable coming to a halt. Often used for comedic effect or to punctuate a sudden stop.",
+      "use_for": [
+        "pattern interrupt",
+        "freno cómico en rehook",
+        "corte de expectativa antes del giro"
+      ],
+      "design_systems": [
+        "any"
+      ],
+      "editorial_note": "Freno de vinilo para pattern interrupts; máx 1 por reel, siempre sobre corte visual.",
+      "duration_s": 1.94,
+      "processing": "natural_v1",
+      "source": {
+        "provider": "heygen_catalog",
+        "heygen_id": "6b03a847ef81df8d",
+        "heygen_name": "Vinyl Stop Sound Effect"
+      },
+      "added": "2026-06-11"
+    }
+  ]
+}
